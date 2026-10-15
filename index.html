@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Royal Shawarma - King of Taste | رأيك يهمنا</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Cinzel:wght@700;800&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --burgundy: #7D1419;
+      --burgundy-dark: #560C10;
+      --gold: #E5A01A;
+      --gold-light: #F7C852;
+      --cream: #FDF8F0;
+      --cream-card: #FFFFFF;
+      --text-dark: #2B1810;
+      --text-muted: #6E584F;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      font-family: 'Cairo', 'Montserrat', sans-serif;
+      background-color: var(--cream);
+      background-image: radial-gradient(circle at top, #FFFDF9 0%, #F5EBE0 100%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+    }
+
+    .royal-card {
+      width: 100%;
+      max-width: 430px;
+      background: var(--cream-card);
+      border-radius: 22px;
+      padding: 22px 20px 26px;
+      box-shadow: 0 14px 35px rgba(125, 20, 25, 0.15);
+      border: 2px solid var(--burgundy);
+      position: relative;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .royal-card::before {
+      content: "";
+      position: absolute;
+      top: 6px; left: 6px; right: 6px; bottom: 6px;
+      border: 1px solid rgba(229, 160, 26, 0.45);
+      border-radius: 17px;
+      pointer-events: none;
+    }
+
+    /* Sélecteur Darija Arabe / Darija Latin / Français */
+    .lang-switch {
+      display: inline-flex;
+      background: #F4EAE0;
+      border-radius: 20px;
+      padding: 3px;
+      margin-bottom: 12px;
+      border: 1px solid rgba(125, 20, 25, 0.15);
+      direction: ltr;
+    }
+
+    .lang-btn {
+      border: none;
+      background: transparent;
+      padding: 5px 11px;
+      border-radius: 16px;
+      font-family: 'Cairo', 'Montserrat', sans-serif;
+      font-size: 0.74rem;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .lang-btn.active {
+      background: var(--burgundy);
+      color: #FFF;
+      box-shadow: 0 2px 6px rgba(125, 20, 25, 0.25);
+    }
+
+    .crown-svg {
+      width: 62px;
+      height: 44px;
+      margin: 0 auto 2px;
+      display: block;
+      filter: drop-shadow(0 3px 6px rgba(229, 160, 26, 0.35));
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 1.9rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      letter-spacing: 1.5px;
+      line-height: 1.05;
+      direction: ltr;
+    }
+
+    .kebab-icon-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      margin: 4px 0;
+      direction: ltr;
+    }
+
+    .brand-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 1.12rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      letter-spacing: 2px;
+    }
+
+    .slogan {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      letter-spacing: 2.5px;
+      margin-top: 2px;
+      margin-bottom: 14px;
+      padding: 3px 12px;
+      background: rgba(229, 160, 26, 0.18);
+      border-radius: 20px;
+      direction: ltr;
+    }
+
+    .reward-banner {
+      background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+      color: #FFF;
+      padding: 12px 14px;
+      border-radius: 14px;
+      margin-bottom: 18px;
+      font-size: 0.88rem;
+      line-height: 1.5;
+      border: 1px solid var(--gold);
+      box-shadow: 0 4px 12px rgba(125, 20, 25, 0.2);
+    }
+
+    .reward-banner strong {
+      color: var(--gold-light);
+      display: block;
+      font-size: 0.95rem;
+      margin-bottom: 2px;
+    }
+
+    .question-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .question-sub {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .stars-container {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 12px;
+      direction: ltr;
+    }
+
+    .star-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .star-btn svg {
+      width: 44px;
+      height: 44px;
+      fill: #E4DCD3;
+      stroke: var(--gold);
+      stroke-width: 1.5px;
+      transition: fill 0.2s ease, filter 0.2s ease;
+    }
+
+    .star-btn.active svg {
+      fill: var(--gold);
+      filter: drop-shadow(0 3px 8px rgba(229, 160, 26, 0.5));
+    }
+
+    .star-btn:active {
+      transform: scale(1.22);
+    }
+
+    .rating-hint {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      min-height: 24px;
+      margin-bottom: 8px;
+    }
+
+    .panel {
+      display: none;
+      margin-top: 12px;
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .feedback-box {
+      background: #FFF9F2;
+      border: 1px solid #F0DFC8;
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .feedback-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      margin-bottom: 6px;
+      text-align: center;
+    }
+
+    .feedback-desc {
+      font-size: 0.84rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      text-align: center;
+      line-height: 1.5;
+    }
+
+    .chips-label {
+      font-size: 0.82rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .chips-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 12px;
+      justify-content: center;
+    }
+
+    .chip {
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      padding: 7px 12px;
+      border-radius: 20px;
+      border: 1px solid #D8C7B8;
+      background: #FFFFFF;
+      color: var(--text-dark);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .chip.selected {
+      background: var(--burgundy);
+      color: #FFFFFF;
+      border-color: var(--burgundy);
+    }
+
+    textarea {
+      width: 100%;
+      border: 1px solid #D8C7B8;
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-family: inherit;
+      font-size: 0.86rem;
+      resize: none;
+      height: 78px;
+      margin-bottom: 12px;
+      background: #FFF;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: var(--burgundy);
+    }
+
+    .btn-main {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 14px 16px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      text-decoration: none;
+    }
+
+    .btn-main:active {
+      transform: scale(0.98);
+    }
+
+    .btn-whatsapp {
+      background: #25D366;
+      color: #FFFFFF;
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.3);
+    }
+
+    .btn-google {
+      background: linear-gradient(135deg, var(--gold) 0%, #D48806 100%);
+      color: #FFFFFF;
+      box-shadow: 0 6px 18px rgba(229, 160, 26, 0.38);
+    }
+
+    .positive-box {
+      background: #FFFDF8;
+      border: 1.5px solid var(--gold);
+      border-radius: 14px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+
+    .positive-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      margin-bottom: 6px;
+    }
+
+    .positive-desc {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      line-height: 1.5;
+    }
+
+    .astuce-box {
+      background: rgba(229, 160, 26, 0.14);
+      border-radius: 10px;
+      padding: 10px 12px;
+      font-size: 0.8rem;
+      color: var(--text-dark);
+      margin-bottom: 14px;
+      line-height: 1.45;
+    }
+
+    .footer-brand {
+      margin-top: 18px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      font-weight: 600;
+      direction: ltr;
+    }
+
+    #pause-screen {
+      display: none;
+      text-align: center;
+      padding: 30px 10px;
+      direction: ltr;
+    }
+
+    .pause-icon {
+      font-size: 2.8rem;
+      margin-bottom: 12px;
+    }
+
+    .pause-title {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      margin-bottom: 10px;
+    }
+
+    .pause-text {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="royal-card">
+    <!-- ÉCRAN DE PAUSE À DISTANCE (SI SERVICE_ACTIF = false) -->
+    <div id="pause-screen">
+      <div class="pause-icon">⏸️</div>
+      <div class="pause-title">Service en pause — Contactez Nadarly</div>
+      <p class="pause-text">
+        Ce portail d'avis client est temporairement suspendu.<br>
+        الخدمة متوقفة مؤقتاً — تواصلوا مع <strong>Nadarly</strong> لتفعيل الخدمة.
+      </p>
+    </div>
+
+    <!-- CONTENU PRINCIPAL (SI SERVICE_ACTIF = true) -->
+    <div id="main-content">
+      <!-- Sélecteur de langue (Darija Arabe par défaut / Darija Latin / FR) -->
+      <div class="lang-switch">
+        <button type="button" class="lang-btn active" data-lang="ar">🇲🇦 دارجة</button>
+        <button type="button" class="lang-btn" data-lang="lat">🇲🇦 Darija</button>
+        <button type="button" class="lang-btn" data-lang="fr">🇫🇷 FR</button>
+      </div>
+
+      <!-- Couronne Dorée -->
+      <svg class="crown-svg" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 55 L18 22 L38 40 L50 12 L62 40 L82 22 L90 55 Z" fill="#E5A01A"/>
+        <rect x="10" y="58" width="80" height="7" rx="3.5" fill="#7D1419"/>
+        <circle cx="18" cy="17" r="4.5" fill="#E5A01A"/>
+        <circle cx="50" cy="7" r="5" fill="#E5A01A"/>
+        <circle cx="82" cy="17" r="4.5" fill="#E5A01A"/>
+      </svg>
+
+      <div class="brand-title">ROYAL</div>
+      <div class="kebab-icon-row">
+        <span style="color:#E5A01A;font-size:1.1rem;">🔥</span>
+        <span class="brand-sub">SHAWARMA</span>
+        <span style="color:#E5A01A;font-size:1.1rem;">🔥</span>
+      </div>
+      <div class="slogan">- KING OF TASTE -</div>
+
+      <!-- Bannière Cadeau -->
+      <div class="reward-banner" id="reward-box">
+        <strong id="t-reward-title">🎁 كادو ملكي ليك (Cadeau Royal)</strong>
+        <span id="t-reward-body">عطينا رأيك فـ 15 ثانية وربح <b>صوص ميزون أو سوبليمون فريت فابور</b> فالمجي الجاي ديالك!</span>
+      </div>
+
+      <div class="question-title" id="t-question">كيفاش جاتكم الكوموند ديالكم اليوم؟</div>
+      <div class="question-sub" id="t-sub">قيس النجمات باش تعطينا نقطتك</div>
+
+      <!-- Sélecteur 5 étoiles -->
+      <div class="stars-container" id="stars">
+        <button class="star-btn" data-val="1" aria-label="1 étoile">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="star-btn" data-val="2" aria-label="2 étoiles">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="star-btn" data-val="3" aria-label="3 étoiles">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="star-btn" data-val="4" aria-label="4 étoiles">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+        <button class="star-btn" data-val="5" aria-label="5 étoiles">
+          <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        </button>
+      </div>
+
+      <div class="rating-hint" id="rating-label"></div>
+
+      <!-- 1 À 3 ÉTOILES : INTERCEPTION DIRECTE WHATSAPP GÉRANT -->
+      <div class="panel" id="panel-low">
+        <div class="feedback-box">
+          <div class="feedback-title" id="t-low-title">👑 المسير كيتصنط ليك مباشرة</div>
+          <p class="feedback-desc" id="t-low-desc">
+            سمح لينا بزاف يلا ما كانتش التجربة كيف بغيتي. قولها مباشرة للمسير فـ واتساب باش يقدّها ليك فالحين:
+          </p>
+
+          <span class="chips-label" id="t-chips-label">شنو الحاجة لي خاصنا نحسنوها؟</span>
+          <div class="chips-grid" id="chips-container">
+            <button type="button" class="chip" data-motif="التعطال فالصالة (Attente en salle)" id="c-1">⏱️ التعطال فالصالة</button>
+            <button type="button" class="chip" data-motif="مشكل فـ Glovo / أومبورطي" id="c-2">🛵 توصيل Glovo</button>
+            <button type="button" class="chip" data-motif="العمارة / كمية الدجاج" id="c-3">🌯 كمية العمارة</button>
+            <button type="button" class="chip" data-motif="الصوص / سوبليمون" id="c-4">🥣 الصوص</button>
+            <button type="button" class="chip" data-motif="ملاحظة أخرى" id="c-5">💬 حاجة أخرى</button>
+          </div>
+
+          <textarea id="custom-msg" placeholder="كتب لينا هنا شنو وقع بالضبط (مثلا: كوموند Glovo، الوقت، أشنو خديتي...)"></textarea>
+
+          <button type="button" class="btn-main btn-whatsapp" id="send-wa-btn">
+            <span id="t-wa-btn">💬 صيفط ميساج خاص للمسير (WhatsApp)</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 À 5 ÉTOILES : REDIRECTION GOOGLE MAPS -->
+      <div class="panel" id="panel-high">
+        <div class="positive-box">
+          <div class="positive-title" id="t-high-title">الله يحفظك! شكراً بزاف 🎉</div>
+          <p class="positive-desc" id="t-high-desc">
+            النقطة ديالك كتعاون <strong>Royal Shawarma</strong> يبقى ديما <em>King of Taste</em>! غادي ندوزوك دابا لـ Google Maps باش تحط تعليقك.
+          </p>
+          <div class="astuce-box" id="t-astuce">
+            💡 <strong>كلمة زوينة منك:</strong> دكر الأكلة لي عجباتك (<em>Shawarma Royal, Frite, Citronnade, Sauce...</em>) فالتعليق!
+          </div>
+          <a href="https://maps.app.goo.gl/8CMmZn5qawA7JWCa7?g_st=ac" target="_blank" rel="noopener" class="btn-main btn-google" id="google-link-btn">
+            <span id="t-google-btn">⭐ حط رأيك فـ Google Maps دابا</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="footer-brand">
+        <span>@ROYAL.SHAWARMA</span> • <span>Propulsé par Nadarly</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURATION NADARLY (MODIFIABLE DANS SAMSUNG NOTES EN 10 SECONDES)
+    // =========================================================================
+    const SERVICE_ACTIF = true; // Mettre sur false pour afficher "Service en pause — Contactez Nadarly"
+    const WHATSAPP_GERANT = "212657386726"; // Numéro WhatsApp du gérant (+212 657-386726)
+    const GOOGLE_MAPS_URL = "https://maps.app.goo.gl/8CMmZn5qawA7JWCa7?g_st=ac"; // Lien Google Maps exact
+    const AFFICHER_CADEAU = true; // true = affiche la bannière cadeau, false = la masque
+    // =========================================================================
+
+    const pauseScreen = document.getElementById('pause-screen');
+    const mainContent = document.getElementById('main-content');
+    const rewardBox = document.getElementById('reward-box');
+    const htmlRoot = document.getElementById('html-root');
+
+    if (!SERVICE_ACTIF) {
+      mainContent.style.display = 'none';
+      pauseScreen.style.display = 'block';
+    }
+
+    if (!AFFICHER_CADEAU && rewardBox) {
+      rewardBox.style.display = 'none';
+    }
+
+    const i18n = {
+      ar: {
+        dir: "rtl",
+        rewardTitle: "🎁 كادو ملكي ليك (Cadeau Royal)",
+        rewardBody: "عطينا رأيك فـ 15 ثانية وربح <b>صوص ميزون أو سوبليمون فريت فابور</b> فالمجي الجاي ديالك!",
+        question: "كيفاش جاتكم الكوموند ديالكم اليوم؟",
+        sub: "قيس النجمات باش تعطينا نقطتك",
+        labels: {
+          1: "1/5 — ما عجباتنيش كاع 😔",
+          2: "2/5 — ناقصة شوية 😕",
+          3: "3/5 — هي هاديك، تقدر تكون حسن 😐",
+          4: "4/5 — بنينة بزاف! الله يعطيكم الصحة 😋",
+          5: "5/5 — واعرة وناضية! الملك ديال الشاورما 👑🔥"
+        },
+        lowTitle: "👑 المسير كيتصنط ليك مباشرة",
+        lowDesc: "سمح لينا بزاف يلا ما كانتش التجربة كيف بغيتي. قولها مباشرة للمسير فـ واتساب باش يقدّها ليك فالحين:",
+        chipsLabel: "شنو الحاجة لي خاصنا نحسنوها؟",
+        c1: "⏱️ التعطال فالصالة",
+        c2: "🛵 توصيل Glovo",
+        c3: "🌯 كمية العمارة",
+        c4: "🥣 الصوص",
+        c5: "💬 حاجة أخرى",
+        placeholder: "كتب لينا هنا شنو وقع بالضبط (مثلا: كوموند Glovo، الوقت، أشنو خديتي...)",
+        waBtn: "💬 صيفط ميساج خاص للمسير (WhatsApp)",
+        highTitle: "الله يحفظك! شكراً بزاف 🎉",
+        highDesc: "النقطة ديالك كتعاون <strong>Royal Shawarma</strong> يبقى ديما <em>King of Taste</em>! غادي ندوزوك دابا لـ Google Maps باش تحط تعليقك.",
+        astuce: "💡 <strong>كلمة زوينة منك:</strong> دكر الأكلة لي عجباتك (<em>Shawarma Royal, Frite, Citronnade, Sauce...</em>) فالتعليق!",
+        googleBtn: "⭐ حط رأيك فـ Google Maps دابا"
+      },
+      lat: {
+        dir: "ltr",
+        rewardTitle: "🎁 CADEAU ROYAL LIK",
+        rewardBody: "3tina rayek f 15s w rbe7 <b>Sauce Maison awla Supplément Frite fabour</b> f l'mji Jjay dyalek !",
+        question: "Kifach jatkom l'commande dyalkom lyoum ?",
+        sub: "Qiss njmat bach t3tina no9tek",
+        labels: {
+          1: "1/5 — Ma 3jbatnich ga3 😔",
+          2: "2/5 — Na9ssa chwiya 😕",
+          3: "3/5 — Hiya hadik, t9der tkoun 7ssen 😐",
+          4: "4/5 — Bnina bezzaf ! Llah y3tikom s7a 😋",
+          5: "5/5 — Wa3ra w nadiya ! King of Taste 👑🔥"
+        },
+        lowTitle: "👑 L'Gérant kaytsnnet lik direct",
+        lowDesc: "Sme7 lina bezzaf ila ma kantch l'commande kif bghiti. Goulha direct l'Gérant f WhatsApp bach يقدّها lik f l'7in :",
+        chipsLabel: "Chnou l'7aja li khassna n7ssnouha ?",
+        c1: "⏱️ T3ttalto f la salle",
+        c2: "🛵 Livraison Glovo",
+        c3: "🌯 Quantité d'3mara",
+        c4: "🥣 Sauce / Supplément",
+        c5: "💬 7aja okhra",
+        placeholder: "Kteb lina hna chnou w9e3 bddabt (ex: commande Glovo, l'we9t, chnou khditi...)",
+        waBtn: "💬 Sifet message l'Gérant (WhatsApp)",
+        highTitle: "Llah y7fdek ! Chokran bezzaf 🎉",
+        highDesc: "No9tek kat3awen <strong>Royal Shawarma</strong> yb9a dima <em>King of Taste</em> ! Ghadi ndwzouk daba l Google Maps.",
+        astuce: "💡 <strong>Kelma zwina mennek :</strong> Dker chnou 3jbek (<em>Shawarma Royal, Frite, Citronnade, Sauce...</em>) f Google !",
+        googleBtn: "⭐ 7ett rayek f Google Maps daba"
+      },
+      fr: {
+        dir: "ltr",
+        rewardTitle: "🎁 CADEAU FIDÉLITÉ ROYAL",
+        rewardBody: "Donnez votre avis en 15s et profitez d'une <b>Sauce Maison ou Supplément Frite offert</b> à votre prochain passage !",
+        question: "Comment s'est passée votre commande ?",
+        sub: "Touchez une étoile pour nous noter",
+        labels: {
+          1: "1/5 — Très déçu 😔",
+          2: "2/5 — Moyen 😕",
+          3: "3/5 — Peut mieux faire 😐",
+          4: "4/5 — Très bon ! 😋",
+          5: "5/5 — Royal ! Le King of Taste 👑🔥"
+        },
+        lowTitle: "👑 Le gérant vous écoute en direct",
+        lowDesc: "Nous sommes désolés que tout n'ait pas été parfait. Dites-le directement au responsable sur WhatsApp :",
+        chipsLabel: "Quel point pouvons-nous améliorer ?",
+        c1: "⏱️ Temps d'attente",
+        c2: "🛵 Livraison Glovo",
+        c3: "🌯 Quantité garniture",
+        c4: "🥣 Sauce",
+        c5: "💬 Autre",
+        placeholder: "Précisez votre remarque ici (ex: commande Glovo, heure, plat choisi)...",
+        waBtn: "💬 Envoyer en privé au Gérant (WhatsApp)",
+        highTitle: "Merci infiniment ! 🎉",
+        highDesc: "Votre note aide énormément <strong>Royal Shawarma</strong> à rester le <em>King of Taste</em> ! Redirection vers Google Maps...",
+        astuce: "💡 <strong>Petit coup de pouce :</strong> Mentionnez votre plat préféré (<em>Shawarma Royal, Frite, Citronnade...</em>) sur Google !",
+        googleBtn: "⭐ Publier mon avis sur Google"
+      }
+    };
+
+    let currentLang = "ar";
+    let currentRating = 0;
+    let selectedMotifs = [];
+
+    const starBtns = document.querySelectorAll('.star-btn');
+    const ratingLabel = document.getElementById('rating-label');
+    const panelLow = document.getElementById('panel-low');
+    const panelHigh = document.getElementById('panel-high');
+    const googleLinkBtn = document.getElementById('google-link-btn');
+    const chips = document.querySelectorAll('.chip');
+    const sendWaBtn = document.getElementById('send-wa-btn');
+    const customMsg = document.getElementById('custom-msg');
+    const langBtns = document.querySelectorAll('.lang-btn');
+
+    googleLinkBtn.href = GOOGLE_MAPS_URL;
+
+    function applyLang(lang) {
+      currentLang = lang;
+      const t = i18n[lang];
+      htmlRoot.setAttribute('dir', t.dir);
+      htmlRoot.setAttribute('lang', lang === 'ar' ? 'ar' : 'fr');
+
+      document.getElementById('t-reward-title').innerHTML = t.rewardTitle;
+      document.getElementById('t-reward-body').innerHTML = t.rewardBody;
+      document.getElementById('t-question').textContent = t.question;
+      document.getElementById('t-sub').textContent = t.sub;
+      document.getElementById('t-low-title').textContent = t.lowTitle;
+      document.getElementById('t-low-desc').textContent = t.lowDesc;
+      document.getElementById('t-chips-label').textContent = t.chipsLabel;
+      document.getElementById('c-1').textContent = t.c1;
+      document.getElementById('c-2').textContent = t.c2;
+      document.getElementById('c-3').textContent = t.c3;
+      document.getElementById('c-4').textContent = t.c4;
+      document.getElementById('c-5').textContent = t.c5;
+      customMsg.placeholder = t.placeholder;
+      document.getElementById('t-wa-btn').textContent = t.waBtn;
+      document.getElementById('t-high-title').textContent = t.highTitle;
+      document.getElementById('t-high-desc').innerHTML = t.highDesc;
+      document.getElementById('t-astuce').innerHTML = t.astuce;
+      document.getElementById('t-google-btn').textContent = t.googleBtn;
+
+      if (currentRating > 0) {
+        ratingLabel.textContent = t.labels[currentRating];
+      }
+    }
+
+    langBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        langBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        applyLang(btn.getAttribute('data-lang'));
+      });
+    });
+
+    starBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        currentRating = parseInt(btn.getAttribute('data-val'), 10);
+        starBtns.forEach(b => {
+          const val = parseInt(b.getAttribute('data-val'), 10);
+          b.classList.toggle('active', val <= currentRating);
+        });
+
+        ratingLabel.textContent = i18n[currentLang].labels[currentRating] || "";
+
+        if (currentRating <= 3) {
+          panelHigh.style.display = 'none';
+          panelLow.style.display = 'block';
+        } else {
+          panelLow.style.display = 'none';
+          panelHigh.style.display = 'block';
+          setTimeout(() => {
+            window.location.href = GOOGLE_MAPS_URL;
+          }, 1200);
+        }
+      });
+    });
+
+    chips.forEach(chip => {
+      chip.addEventListener('click', () => {
+        chip.classList.toggle('selected');
+        const motif = chip.getAttribute('data-motif');
+        if (selectedMotifs.includes(motif)) {
+          selectedMotifs = selectedMotifs.filter(m => m !== motif);
+        } else {
+          selectedMotifs.push(motif);
+        }
+      });
+    });
+
+    sendWaBtn.addEventListener('click', () => {
+      const motifsStr = selectedMotifs.length > 0 ? selectedMotifs.join(' + ') : 'ما محددش';
+      const details = customMsg.value.trim() || 'ما كاينش تفاصيل إضافية';
+      const texte = `السلام عليكم مسير *Royal Shawarma* 👑،%0A%0A` +
+                    `يلاه سكانيت الكود QR باش نعطي رأيي فالكوموند.%0A` +
+                    `⭐ *النقطة:* ${currentRating}/5%0A` +
+                    `📌 *الملاحظة:* ${encodeURIComponent(motifsStr)}%0A` +
+                    `💬 *الميساج:* ${encodeURIComponent(details)}%0A%0A` +
+                    `_مبعوث عبر Bouclier d'Avis Nadarly_`;
+      const waUrl = `https://wa.me/${WHATSAPP_GERANT}?text=${texte}`;
+      window.location.href = waUrl;
+    });
+  </script>
+</body>
+</html>

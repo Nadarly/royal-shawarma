@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affiche QR Darija — Royal Shawarma King of Taste</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;700;800;900&family=Cinzel:wght@700;800&family=Montserrat:wght@600;700;800;900&display=swap" rel="stylesheet">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    :root {
+      --burgundy: #7D1419;
+      --burgundy-dark: #560C10;
+      --gold: #E5A01A;
+      --cream: #FDF8F0;
+      --text-dark: #2B1810;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Cairo', 'Montserrat', sans-serif;
+      background: #222;
+      color: var(--text-dark);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 16px;
+      min-height: 100vh;
+    }
+
+    .control-bar {
+      width: 100%;
+      max-width: 520px;
+      background: #111;
+      color: #FFF;
+      border: 1px solid #444;
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 18px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+      direction: ltr;
+    }
+
+    .control-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .control-row {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .control-row input, .control-row select {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 8px;
+      border: 1px solid #555;
+      background: #222;
+      color: #FFF;
+      font-size: 0.82rem;
+      font-family: inherit;
+    }
+
+    .btn-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .ctrl-btn {
+      padding: 10px;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.78rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-demo-on { background: #E53935; color: #FFF; }
+    .btn-demo-off { background: #2E7D32; color: #FFF; }
+    .btn-print { background: var(--gold); color: #111; grid-column: span 2; }
+
+    .poster-wrapper {
+      width: 100%;
+      max-width: 420px;
+      background: var(--cream);
+      background-image: radial-gradient(circle at center, #FFFFFF 0%, #F7EFE4 100%);
+      border-radius: 18px;
+      padding: 16px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 18px 45px rgba(0,0,0,0.5);
+    }
+
+    .poster-inner {
+      border: 3px solid var(--burgundy);
+      border-radius: 12px;
+      padding: 22px 16px;
+      text-align: center;
+      position: relative;
+    }
+
+    .poster-inner::after {
+      content: "";
+      position: absolute;
+      top: 5px; left: 5px; right: 5px; bottom: 5px;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      pointer-events: none;
+    }
+
+    .watermark {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(-32deg);
+      font-family: 'Montserrat', sans-serif;
+      font-size: 3rem;
+      font-weight: 900;
+      color: rgba(125, 20, 25, 0.16);
+      border: 5px dashed rgba(125, 20, 25, 0.22);
+      padding: 10px 24px;
+      border-radius: 14px;
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 20;
+      letter-spacing: 3px;
+    }
+
+    .watermark.hidden { display: none; }
+
+    .crown-svg {
+      width: 66px;
+      height: 46px;
+      margin: 0 auto 2px;
+      display: block;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 2.05rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      letter-spacing: 2px;
+      line-height: 1.05;
+    }
+
+    .brand-sub {
+      font-family: 'Cinzel', serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      letter-spacing: 2.5px;
+      margin-top: 2px;
+    }
+
+    .slogan {
+      display: inline-block;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--text-dark);
+      letter-spacing: 3px;
+      margin: 4px 0 12px;
+    }
+
+    .hook-badge {
+      background: var(--burgundy);
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      font-weight: 800;
+      padding: 8px 14px;
+      border-radius: 10px;
+      margin-bottom: 10px;
+      box-shadow: 0 4px 12px rgba(125, 20, 25, 0.25);
+    }
+
+    .stars-row {
+      color: var(--gold);
+      font-size: 1.6rem;
+      letter-spacing: 4px;
+      margin-bottom: 8px;
+      text-shadow: 0 2px 4px rgba(229, 160, 26, 0.3);
+    }
+
+    .cta-text {
+      font-size: 0.92rem;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 1.5;
+      margin-bottom: 14px;
+      padding: 0 6px;
+      direction: rtl;
+    }
+
+    .qr-frame {
+      background: #FFFFFF;
+      border: 3px solid var(--gold);
+      border-radius: 16px;
+      padding: 14px;
+      display: inline-flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 22px rgba(125, 20, 25, 0.12);
+      margin-bottom: 14px;
+    }
+
+    #qrcode {
+      width: 170px;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    #qrcode img, #qrcode canvas {
+      max-width: 100%;
+      height: auto;
+    }
+
+    .scan-pill {
+      margin-top: 10px;
+      background: var(--gold);
+      color: #1F1209;
+      font-size: 0.82rem;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    .offer-strip {
+      background: rgba(229, 160, 26, 0.16);
+      border: 1.5px dashed var(--burgundy);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 14px;
+      font-size: 0.86rem;
+      font-weight: 800;
+      color: var(--burgundy);
+      line-height: 1.45;
+      direction: rtl;
+    }
+
+    .poster-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: var(--burgundy);
+      border-top: 1px solid rgba(125, 20, 25, 0.2);
+      padding-top: 10px;
+      margin-top: 4px;
+      direction: ltr;
+    }
+
+    @media print {
+      body { background: none; padding: 0; }
+      .control-bar { display: none !important; }
+      .poster-wrapper { box-shadow: none; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- BARRE DE CONTRÔLE NADARLY -->
+  <div class="control-bar">
+    <div class="control-title">
+      <span>👑 Studio Affiche Darija — Nadarly</span>
+      <span>Royal Shawarma</span>
+    </div>
+
+    <div class="control-row">
+      <input type="text" id="url-input" value="https://royal-shawarma-avis.netlify.app" placeholder="Collez ici le lien Netlify ou Tiiny.host de votre index.html...">
+      <select id="mode-select">
+        <option value="ar_mix">🇲🇦 Darija (Arabe) — Table & Glovo : بصحتك وراحتك! كيفاش جاتك الشاورما؟</option>
+        <option value="ar_glovo">🛵 Darija (Arabe) — Spécial Sac Glovo : وصلاتك الكوموند Glovo؟</option>
+        <option value="lat_mix">🇲🇦 Darija (Latin) : Bss7tek w ra7tek ! Kifach jatek l'commande lyoum ?</option>
+      </select>
+      <select id="offer-select">
+        <option value="🎁 ربح سوبليمون فريت (Supplément Frite) أو صوص ميزون فابور فالمجي الجاي ملي تعطي رأيك!">Cadeau 1 (Darija) : Supplément Frite (7 DH) ou Sauce offert</option>
+        <option value="🍋 ربح كاس ديال السيتروناد (Jus de Citronnade) فابور فالمجي الجاي بعد التقييم!">Cadeau 2 (Darija) : Jus de Citronnade (9 DH) offert</option>
+        <option value="🍨 شارك وربح ديسير ملكي (Oreo / Framboise / Spéculoos) فابور فالمجي الجاي!">Cadeau 3 (Darija) : Dessert Gourmand (12 DH)</option>
+        <option value="🎁 Rbe7 Supplément Frite awla Sauce Maison FABOUR f l'mji Jjay melli t3ti rayek !">Cadeau 1 (Darija Latin) : Frite ou Sauce Fabour</option>
+        <option value="👑 عاوننا نبقاو ديما KING OF TASTE — رأيك كيهمنا بزاف!">Sans cadeau : Message Royal Darija</option>
+      </select>
+    </div>
+
+    <div class="btn-group">
+      <button class="ctrl-btn btn-demo-on" id="toggle-demo-btn">Filigrane DÉMO : ACTIF</button>
+      <button class="ctrl-btn" style="background:#444;color:#FFF;" id="hide-bar-btn">Masquer barre (Capture)</button>
+      <button class="ctrl-btn btn-print" onclick="window.print()">🖨️ Imprimer / Enregistrer en PDF</button>
+    </div>
+  </div>
+
+  <!-- AFFICHE IMPRIMABLE -->
+  <div class="poster-wrapper" id="poster-area">
+    <div class="watermark" id="demo-watermark">DÉMO NADARLY</div>
+
+    <div class="poster-inner">
+      <svg class="crown-svg" viewBox="0 0 100 70" xmlns="http://www.w3.org/2000/svg">
+        <path d="M10 55 L18 22 L38 40 L50 12 L62 40 L82 22 L90 55 Z" fill="#E5A01A"/>
+        <rect x="10" y="58" width="80" height="7" rx="3.5" fill="#7D1419"/>
+        <circle cx="18" cy="17" r="4.5" fill="#E5A01A"/>
+        <circle cx="50" cy="7" r="5" fill="#E5A01A"/>
+        <circle cx="82" cy="17" r="4.5" fill="#E5A01A"/>
+      </svg>
+
+      <div class="brand-title">ROYAL</div>
+      <div class="brand-sub">SHAWARMA</div>
+      <div class="slogan">- KING OF TASTE -</div>
+
+      <div class="hook-badge" id="hook-display">رأيك كيسوى ذهب! 👑</div>
+
+      <div class="stars-row">★★★★★</div>
+
+      <p class="cta-text" id="cta-display">
+        بصحتك وراحتك! كيفاش جاتك الكوموند ديالك اليوم؟ سكاني هاد الكود بالتليفون فـ 15 ثانية وعطينا نقطتك:
+      </p>
+
+      <div class="qr-frame">
+        <div id="qrcode"></div>
+        <div class="scan-pill" id="scan-pill-text">📱 سكاني هنا / SCANNEZ-MOI</div>
+      </div>
+
+      <div class="offer-strip" id="offer-display">
+        🎁 ربح سوبليمون فريت (Supplément Frite) أو صوص ميزون فابور فالمجي الجاي ملي تعطي رأيك!
+      </div>
+
+      <div class="poster-footer">
+        <span>📸 @ROYAL.SHAWARMA</span>
+        <span>👑 KING OF TASTE</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const urlInput = document.getElementById('url-input');
+    const offerSelect = document.getElementById('offer-select');
+    const modeSelect = document.getElementById('mode-select');
+    const offerDisplay = document.getElementById('offer-display');
+    const ctaDisplay = document.getElementById('cta-display');
+    const hookDisplay = document.getElementById('hook-display');
+    const toggleDemoBtn = document.getElementById('toggle-demo-btn');
+    const demoWatermark = document.getElementById('demo-watermark');
+    const hideBarBtn = document.getElementById('hide-bar-btn');
+    const controlBar = document.querySelector('.control-bar');
+    const posterArea = document.getElementById('poster-area');
+    const qrContainer = document.getElementById('qrcode');
+
+    let demoActive = true;
+
+    const modes = {
+      ar_mix: {
+        dir: "rtl",
+        hook: "رأيك كيسوى ذهب! 👑",
+        cta: "بصحتك وراحتك! كيفاش جاتك الكوموند ديالك اليوم؟ سكاني هاد الكود بالتليفون فـ 15 ثانية وعطينا نقطتك:"
+      },
+      ar_glovo: {
+        dir: "rtl",
+        hook: "وصلاتك الكوموند Glovo؟ 🛵",
+        cta: "بصحتك وراحتك! سكاني هاد الكود فـ 15 ثانية، قول لينا كيفاش جاتك الكوموند وربح كادو فالمجي الجاي:"
+      },
+      lat_mix: {
+        dir: "ltr",
+        hook: "RAYEK KAYSWA DHEB ! 👑",
+        cta: "Bss7tek w ra7tek ! Kifach jatek l'commande dyalek lyoum ? Scanni had l'QR Code f 15 secondes :"
+      }
+    };
+
+    function generateQR(url) {
+      qrContainer.innerHTML = "";
+      const targetUrl = url.trim() || "https://royal-shawarma-avis.netlify.app";
+      if (typeof QRCode !== "undefined") {
+        new QRCode(qrContainer, {
+          text: targetUrl,
+          width: 170,
+          height: 170,
+          colorDark: "#7D1419",
+          colorLight: "#FFFFFF",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } else {
+        const img = document.createElement('img');
+        img.src = "https://api.qrserver.com/v1/create-qr-code/?size=170x170&color=7D1419&data=" + encodeURIComponent(targetUrl);
+        qrContainer.appendChild(img);
+      }
+    }
+
+    urlInput.addEventListener('input', () => generateQR(urlInput.value));
+
+    modeSelect.addEventListener('change', () => {
+      const m = modes[modeSelect.value];
+      hookDisplay.textContent = m.hook;
+      ctaDisplay.textContent = m.cta;
+      ctaDisplay.style.direction = m.dir;
+    });
+
+    offerSelect.addEventListener('change', () => {
+      offerDisplay.textContent = offerSelect.value;
+    });
+
+    toggleDemoBtn.addEventListener('click', () => {
+      demoActive = !demoActive;
+      if (demoActive) {
+        demoWatermark.classList.remove('hidden');
+        toggleDemoBtn.textContent = "Filigrane DÉMO : ACTIF";
+        toggleDemoBtn.className = "ctrl-btn btn-demo-on";
+      } else {
+        demoWatermark.classList.add('hidden');
+        toggleDemoBtn.textContent = "Filigrane DÉMO : DÉSACTIVÉ";
+        toggleDemoBtn.className = "ctrl-btn btn-demo-off";
+      }
+    });
+
+    hideBarBtn.addEventListener('click', () => {
+      controlBar.style.display = 'none';
+    });
+
+    posterArea.addEventListener('dblclick', () => {
+      controlBar.style.display = 'block';
+    });
+
+    generateQR(urlInput.value);
+  </script>
+</body>
+</html>

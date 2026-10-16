@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" id="html-root">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Cockpit Gérant PRO — حلويات اللوبان | Nadarly</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;600;700;800;900&family=Montserrat:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #140D0B;
+      --card-dark: #211612;
+      --border-gold: rgba(212, 175, 55, 0.35);
+      --terracotta: #C84B31;
+      --gold: #D4AF37;
+      --gold-light: #F7E5A9;
+      --green: #25D366;
+      --blue: #29B6F6;
+      --orange: #FFA726;
+      --red: #EF5350;
+      --text-light: #FDF8F2;
+      --text-muted: #B09B90;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+    body {
+      font-family: 'Cairo', 'Montserrat', sans-serif;
+      background-color: var(--bg-dark);
+      color: var(--text-light);
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    /* Top Bar */
+    .topbar {
+      background: linear-gradient(90deg, #1E120E 0%, #2C1913 100%);
+      border-bottom: 2px solid var(--gold);
+      padding: 12px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: var(--terracotta);
+      border: 1.5px solid var(--gold);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+    }
+
+    .brand-title {
+      font-size: 1.05rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      line-height: 1.1;
+    }
+
+    .brand-sub {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      display: block;
+    }
+
+    .lang-btn {
+      background: rgba(212, 175, 55, 0.15);
+      color: var(--gold-light);
+      border: 1px solid var(--gold);
+      padding: 6px 12px;
+      border-radius: 18px;
+      font-family: inherit;
+      font-size: 0.76rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 16px 14px;
+    }
+
+    /* KPIs Financiers & Réputation */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+      margin-bottom: 18px;
+    }
+    @media (min-width: 600px) { .kpi-grid { grid-template-columns: repeat(4, 1fr); } }
+
+    .kpi-card {
+      background: var(--card-dark);
+      border: 1px solid var(--border-gold);
+      border-radius: 16px;
+      padding: 13px 12px;
+      text-align: center;
+    }
+
+    .kpi-label {
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .kpi-val {
+      font-size: 1.35rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      direction: ltr;
+    }
+
+    /* Onglets Navigation */
+    .tabs-bar {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      margin-bottom: 18px;
+      padding-bottom: 4px;
+      scrollbar-width: none;
+    }
+    .tabs-bar::-webkit-scrollbar { display: none; }
+
+    .tab-btn {
+      flex: 1;
+      white-space: nowrap;
+      background: var(--card-dark);
+      color: var(--text-muted);
+      border: 1px solid var(--border-gold);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.84rem;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: var(--terracotta);
+      color: #FFF;
+      border-color: var(--gold);
+      box-shadow: 0 4px 15px rgba(200, 75, 49, 0.35);
+    }
+
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* Cartes & Formulaires */
+    .panel-box {
+      background: var(--card-dark);
+      border: 1px solid var(--border-gold);
+      border-radius: 18px;
+      padding: 18px 15px;
+      margin-bottom: 18px;
+    }
+
+    .panel-title {
+      font-size: 1.1rem;
+      font-weight: 900;
+      color: var(--gold-light);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    @media (min-width: 600px) { .form-grid { grid-template-columns: 1fr 1fr; } }
+
+    .inp-group label {
+      display: block;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+      font-weight: 700;
+    }
+
+    .inp-group input, .inp-group select {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 10px;
+      border: 1px solid #4A352C;
+      background: #140D0B;
+      color: #FFF;
+      font-family: inherit;
+      font-size: 0.86rem;
+    }
+
+    .btn-submit {
+      width: 100%;
+      margin-top: 12px;
+      background: linear-gradient(135deg, var(--gold) 0%, #B8860B 100%);
+      color: #140D0B;
+      border: none;
+      padding: 13px;
+      border-radius: 12px;
+      font-family: inherit;
+      font-size: 0.92rem;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    /* Liste des Commandes */
+    .order-card {
+      background: #19100D;
+      border: 1px solid #3D2B24;
+      border-right: 4px solid var(--gold);
+      border-radius: 14px;
+      padding: 14px;
+      margin-bottom: 12px;
+    }
+
+    .order-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 8px;
+      gap: 8px;
+    }
+
+    .client-name {
+      font-size: 1rem;
+      font-weight: 900;
+      color: #FFF;
+    }
+
+    .status-badge {
+      font-size: 0.72rem;
+      font-weight: 800;
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .st-prep { background: rgba(255, 167, 38, 0.2); color: var(--orange); border: 1px solid var(--orange); }
+    .st-ready { background: rgba(41, 182, 246, 0.2); color: var(--blue); border: 1px solid var(--blue); }
+    .st-done { background: rgba(37, 211, 102, 0.2); color: var(--green); border: 1px solid var(--green); }
+
+    .order-details {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .finance-pills {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .f-pill {
+      background: #251814;
+      padding: 5px 10px;
+      border-radius: 8px;
+      font-size: 0.78rem;
+      font-weight: 800;
+    }
+
+    /* Boutons d'action WhatsApp par commande */
+    .wa-actions {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+      gap: 7px;
+    }
+
+    .act-btn {
+      border: none;
+      padding: 8px 10px;
+      border-radius: 9px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 800;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      color: #FFF;
+    }
+
+    .b-receipt { background: #37474F; }
+    .b-ready { background: #0277BD; }
+    .b-review { background: linear-gradient(135deg, #25D366, #128C7E); }
+    .b-paid { background: var(--terracotta); }
+
+    /* Radar Google Maps */
+    .radar-bar-bg {
+      height: 14px;
+      background: #110A08;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #3D2B24;
+      margin: 10px 0;
+    }
+    .radar-bar-fill {
+      height: 100%;
+      width: 62%;
+      background: linear-gradient(90deg, var(--terracotta), var(--gold));
+    }
+
+    #pause-screen {
+      display: none; min-height: 90vh; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 24px; direction: ltr;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ÉCRAN DE PAUSE À DISTANCE NADARLY -->
+  <div id="pause-screen">
+    <div style="font-size:3rem;">⏸️</div>
+    <h2 style="color:var(--gold);margin:10px 0;">Cockpit en pause — Contactez Nadarly</h2>
+    <p style="color:var(--text-muted);max-width:360px;">Ce système de gestion des commandes et de relance d'avis Google est temporairement désactivé.</p>
+  </div>
+
+  <div id="main-app">
+    <div class="topbar">
+      <div class="brand">
+        <div class="brand-logo">🎂</div>
+        <div>
+          <span class="brand-title" id="t-app-title">لوحة تسيير حلويات اللوبان</span>
+          <span class="brand-sub">Cockpit Gérant & Caisse • Propulsé par Nadarly</span>
+        </div>
+      </div>
+      <button class="lang-btn" onclick="toggleLang()" id="lang-btn">🇫🇷 FR</button>
+    </div>
+
+    <div class="container">
+      <!-- 4 INDICATEURS CLÉS EN TEMPS RÉEL -->
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label" id="k-l1">🎂 كوموند اليوم</div>
+          <div class="kpi-val" id="kpi-orders">3</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" id="k-l2">💰 العربون (Avances)</div>
+          <div class="kpi-val" id="kpi-deposit" style="color:var(--green);">450 DH</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" id="k-l3">⏳ الباقي للخلاص (Reste)</div>
+          <div class="kpi-val" id="kpi-remaining" style="color:var(--orange);">730 DH</div>
+        </div>
+        <div class="kpi-card">
+          <div class="kpi-label" id="k-l4">⭐ تقييم Google Maps</div>
+          <div class="kpi-val">3.6 ★ <span style="font-size:0.75rem;color:var(--text-muted);">(47)</span></div>
+        </div>
+      </div>
+
+      <!-- NAVIGATION PAR ONGLETS -->
+      <div class="tabs-bar">
+        <button class="tab-btn active" onclick="openTab('tab-orders', this)" id="tb-1">📋 دفتر الكوموند والعربون</button>
+        <button class="tab-btn" onclick="openTab('tab-review-sender', this)" id="tb-2">🚀 صيفط طلب تقييم 5★ فـ WhatsApp</button>
+        <button class="tab-btn" onclick="openTab('tab-radar', this)" id="tb-3">📊 رادار Google Maps (3.6★ ➔ 4.2★)</button>
+      </div>
+
+      <!-- ==================== ONGLET 1 : CARNET DIGITAL DES COMMANDES ==================== -->
+      <div class="tab-panel active" id="tab-orders">
+        <div class="panel-box">
+          <div class="panel-title">
+            <span id="t-new-order">➕ تسجيل كوموند جديدة (طورطة / عرس / بلاطو)</span>
+          </div>
+
+          <div class="form-grid">
+            <div class="inp-group">
+              <label>👤 اسم الزبون (Nom du client) :</label>
+              <input type="text" id="o-name" placeholder="مثال: فاطمة الزهراء / السي محمد">
+            </div>
+            <div class="inp-group">
+              <label>📱 رقم واتساب الزبون (Téléphone WhatsApp) :</label>
+              <input type="tel" id="o-phone" placeholder="06XXXXXXXX">
+            </div>
+            <div class="inp-group">
+              <label>🎂 تفاصيل الطورطة والكتابة (Détails & Texte sur gâteau) :</label>
+              <input type="text" id="o-desc" placeholder="طورطة 2 طوابق شوكولا - Joyeux Anniversaire...">
+            </div>
+            <div class="inp-group">
+              <label>🕒 نهار وساعة الاستلام (Heure de retrait) :</label>
+              <input type="text" id="o-time" placeholder="مثال: اليوم مع 20:00">
+            </div>
+            <div class="inp-group">
+              <label>💰 الثمن الإجمالي بالدرهم (Prix Total DH) :</label>
+              <input type="number" id="o-total" placeholder="380">
+            </div>
+            <div class="inp-group">
+              <label>💵 العربون لي خلّص (Avance payée DH) :</label>
+              <input type="number" id="o-advance" placeholder="150">
+            </div>
+          </div>
+
+          <button class="btn-submit" onclick="addOrder()">💾 حفظ الكوموند فـ الدفتر الرقمي</button>
+        </div>
+
+        <div class="panel-box">
+          <div class="panel-title">
+            <span>📌 لائحة الكوموند الجارية (Commandes en cours)</span>
+          </div>
+          <div id="orders-container"></div>
+        </div>
+      </div>
+
+      <!-- ==================== ONGLET 2 : ENVOI DIRECT DE DEMANDE D'AVIS WHATSAPP ==================== -->
+      <div class="tab-panel" id="tab-review-sender">
+        <div class="panel-box">
+          <div class="panel-title">
+            <span>🚀 ماكينة جمع 5 نجمات عبر واتساب (Relance Express)</span>
+          </div>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-bottom:14px;line-height:1.6;">
+            💡 <strong>السر باش توصل لـ 4.2★ بسرعة:</strong> ملي الزبون ياخد الطورطة أو الحلوى ديالو، كتب غير النمرة ديالو هنا وكليكي! غادي يوصلو ميساج راقي بإسم <strong>حلويات اللوبان</strong> كيشكرو وكيعطيه الرابط باش يحط النجمات من دارو بلا ما تضيع الوقت فـ لاكيس!
+          </p>
+
+          <div class="form-grid">
+            <div class="inp-group">
+              <label>👤 اسم الزبون (اختياري) :</label>
+              <input type="text" id="q-name" placeholder="مثال: السي كريم">
+            </div>
+            <div class="inp-group">
+              <label>📱 رقم واتساب الزبون (06... أو 07...) :</label>
+              <input type="tel" id="q-phone" placeholder="06XXXXXXXX">
+            </div>
+          </div>
+
+          <button class="btn-submit" style="background:linear-gradient(135deg,#25D366,#128C7E);color:#FFF;" onclick="sendQuickReviewInvite()">
+            📲 صيفط دعوة التقييم + كادو للزبون فـ WhatsApp
+          </button>
+        </div>
+      </div>
+
+      <!-- ==================== ONGLET 3 : RADAR RÉPUTATION GOOGLE MAPS ==================== -->
+      <div class="tab-panel" id="tab-radar">
+        <div class="panel-box">
+          <div class="panel-title">
+            <span>📊 رادار السمعة الرقمية — حلويات اللوبان (Laâyoune)</span>
+          </div>
+          <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:10px;">
+            الوضعية الحالية فـ Google Maps : <strong>3.6 ★ على 47 تقييم</strong>.
+          </p>
+          <div class="radar-bar-bg">
+            <div class="radar-bar-fill"></div>
+          </div>
+
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;">
+            <div style="background:#19100D;padding:12px;border-radius:12px;border:1px solid #3D2B24;">
+              <div style="font-size:0.76rem;color:var(--text-muted);">الهدف الأول (Palier 1)</div>
+              <div style="font-size:1.2rem;font-weight:900;color:var(--gold-light);">3.9 ★</div>
+              <div style="font-size:0.78rem;color:var(--green);">يحتاج فقط : +10 تقييمات 5★</div>
+            </div>
+            <div style="background:#19100D;padding:12px;border-radius:12px;border:1px solid #3D2B24;">
+              <div style="font-size:0.76rem;color:var(--text-muted);">الهدف النفسي (Palier 2)</div>
+              <div style="font-size:1.2rem;font-weight:900;color:var(--gold-light);">4.0 ★+</div>
+              <div style="font-size:0.78rem;color:var(--green);">يحتاج فقط : +19 تقييم 5★</div>
+            </div>
+          </div>
+
+          <div style="margin-top:16px;padding:12px;background:rgba(212,175,55,0.1);border-radius:12px;font-size:0.82rem;line-height:1.5;">
+            🛡️ <strong>دور Bouclier d'Avis Nadarly :</strong> يلا غير 3 ديال الزبناء كل نهار دارو 5 نجمات عبر الرابط ديالك (`nadarly.github.io/loubane`)، فـ <strong>أقل من أسبوع واحد</strong> غادي تفوت حاجز 4.0★ وتولي الأول فالعيون!
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURATION NADARLY (MODIFIABLE EN 10 SECONDES SUR GITHUB)
+    // =========================================================================
+    const SERVICE_ACTIF = true; // false = coupe le cockpit à distance
+    const LIEN_BOUCLIER_AVIS = "https://nadarly.github.io/loubane/";
+    // =========================================================================
+
+    if (!SERVICE_ACTIF) {
+      document.getElementById('main-app').style.display = 'none';
+      document.getElementById('pause-screen').style.display = 'flex';
+    }
+
+    // Commandes de démonstration pré-chargées pour bluffer le gérant
+    const DEFAULT_ORDERS = [
+      {
+        id: 'CMD-101',
+        name: 'السيدة خديجة (حفل خطوبة)',
+        phone: '0661000000',
+        desc: 'طورطة خطوبة 2 طوابق (Blanc & Or) + 2 كيلو بلاطو اللوز برستيج',
+        time: 'اليوم مع 19:30',
+        total: 700,
+        advance: 300,
+        status: 'prep'
+      },
+      {
+        id: 'CMD-102',
+        name: 'السي عبد الله',
+        phone: '0662000000',
+        desc: 'طورطة فريز وفواكه حمراء (8 أشخاص) — Joyeux Anniversaire Yassine',
+        time: 'اليوم مع 21:00',
+        total: 150,
+        advance: 50,
+        status: 'ready'
+      },
+      {
+        id: 'CMD-103',
+        name: 'مريم (أسبوع / عقيقة)',
+        phone: '0663000000',
+        desc: 'طورطة سبوع أزرق سماوي + بلاطو مملحات 40 قطعة',
+        time: 'غداً مع 17:00',
+        total: 330,
+        advance: 100,
+        status: 'prep'
+      }
+    ];
+
+    let orders = JSON.parse(localStorage.getItem('loubane_cockpit_orders') || 'null') || DEFAULT_ORDERS;
+
+    function formatMarocPhone(raw) {
+      let p = raw.replace(/\D/g, '');
+      if (p.startsWith('0')) p = '212' + p.substring(1);
+      if (!p.startsWith('212')) p = '212' + p;
+      return p;
+    }
+
+    function saveOrders() {
+      localStorage.setItem('loubane_cockpit_orders', JSON.stringify(orders));
+      renderOrders();
+    }
+
+    function addOrder() {
+      const name = document.getElementById('o-name').value.trim();
+      const phone = document.getElementById('o-phone').value.trim();
+      const desc = document.getElementById('o-desc').value.trim();
+      const time = document.getElementById('o-time').value.trim() || 'اليوم';
+      const total = parseFloat(document.getElementById('o-total').value) || 0;
+      const advance = parseFloat(document.getElementById('o-advance').value) || 0;
+
+      if (!name || !desc) {
+        alert('المرجو إدخال اسم الزبون وتفاصيل الطورطة!');
+        return;
+      }
+
+      orders.unshift({
+        id: 'CMD-' + Math.floor(100 + Math.random() * 900),
+        name, phone, desc, time, total, advance,
+        status: 'prep'
+      });
+
+      document.getElementById('o-name').value = '';
+      document.getElementById('o-phone').value = '';
+      document.getElementById('o-desc').value = '';
+      document.getElementById('o-time').value = '';
+      document.getElementById('o-total').value = '';
+      document.getElementById('o-advance').value = '';
+
+      saveOrders();
+    }
+
+    function renderOrders() {
+      const box = document.getElementById('orders-container');
+      let sumDeposit = 0;
+      let sumRem = 0;
+
+      box.innerHTML = orders.map((o, idx) => {
+        const rem = Math.max(0, o.total - o.advance);
+        sumDeposit += o.advance;
+        sumRem += rem;
+
+        let badge = '<span class="status-badge st-prep">⏳ في التحضير</span>';
+        if (o.status === 'ready') badge = '<span class="status-badge st-ready">🎂 واجدة فالمحل</span>';
+        if (o.status === 'done') badge = '<span class="status-badge st-done">✅ تم التسليم</span>';
+
+        return `
+          <div class="order-card">
+            <div class="order-top">
+              <div>
+                <span class="client-name">${o.name}</span>
+                <span style="font-size:0.75rem;color:var(--gold);margin-right:6px;">(${o.id})</span>
+              </div>
+              ${badge}
+            </div>
+            <div class="order-details">
+              🎂 <strong>الطلب :</strong> ${o.desc}<br>
+              🕒 <strong>الموعد :</strong> ${o.time} | 📱 <span style="direction:ltr;display:inline-block;">${o.phone || 'بدون رقم'}</span>
+            </div>
+            <div class="finance-pills">
+              <span class="f-pill">💰 المجموع: ${o.total} DH</span>
+              <span class="f-pill" style="color:var(--green);">💵 العربون: ${o.advance} DH</span>
+              <span class="f-pill" style="color:var(--orange);">⏳ الباقي للخلاص: ${rem} DH</span>
+            </div>
+            <div class="wa-actions">
+              <button class="act-btn b-receipt" onclick="sendReceiptWA(${idx})">🧾 وصل العربون (WA)</button>
+              <button class="act-btn b-ready" onclick="sendReadyWA(${idx})">🎂 الطورطة واجدة!</button>
+              <button class="act-btn b-review" onclick="sendReviewAfterOrder(${idx})">⭐ طلب تقييم 5★</button>
+              <button class="act-btn b-paid" onclick="markPaid(${idx})">✅ خالص / مسلّم</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('kpi-orders').textContent = orders.length;
+      document.getElementById('kpi-deposit').textContent = sumDeposit + ' DH';
+      document.getElementById('kpi-remaining').textContent = sumRem + ' DH';
+    }
+
+    // 1. Envoyer le reçu officiel d'avance (العربون) au client sur WhatsApp
+    function sendReceiptWA(idx) {
+      const o = orders[idx];
+      const rem = Math.max(0, o.total - o.advance);
+      const phone = formatMarocPhone(o.phone || '');
+      const msg = `السلام عليكم *${o.name}* 🌸،%0A%0A` +
+                  `شكراً على ثقتكم فـ *حلويات اللوبان (Pâtisserie Loubane)* 🎂.%0A` +
+                  `ها هو وصل تأكيد الكوموند ديالكم رقم *${o.id}*:%0A%0A` +
+                  `🍰 *الطلب:* ${o.desc}%0A` +
+                  `🕒 *موعد الاستلام:* ${o.time}%0A` +
+                  `💰 *الثمن الإجمالي:* ${o.total} DH%0A` +
+                  `✅ *العربون المؤدى:* ${o.advance} DH%0A` +
+                  `⏳ *الباقي عند الاستلام:* ${rem} DH%0A%0A` +
+                  `مرحبا بكم في كل وقت!`;
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    // 2. Prévenir le client que son gâteau est prêt au frais
+    function sendReadyWA(idx) {
+      const o = orders[idx];
+      o.status = 'ready';
+      saveOrders();
+      const rem = Math.max(0, o.total - o.advance);
+      const phone = formatMarocPhone(o.phone || '');
+      const msg = `السلام عليكم *${o.name}* 🎉،%0A%0A` +
+                  `كنعلموكم بلي الكوموند ديالكم (*${o.desc}*) راها *واجدة* وكتسناكم فـ *حلويات اللوبان* 🎂✨.%0A` +
+                  `📌 الباقي عند الاستلام: *${rem} DH*.%0A` +
+                  `بصحتكم وراحتكم مسبقاً!`;
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    // 3. Relancer le client après la fête pour récolter un avis 5★
+    function sendReviewAfterOrder(idx) {
+      const o = orders[idx];
+      const phone = formatMarocPhone(o.phone || '');
+      const msg = `السلام عليكم *${o.name}* 👑،%0A%0A` +
+                  `نتمنّاو تكون الطورطة والحلوى ديال *حلويات اللوبان* عجباتكم وعجبات الضياف ديالكم فالمناسبة! 🎂🎉%0A%0A` +
+                  `رأيكم كيهمنا بزاف باش نبقاو ديما فالمستوى. تقدرو تعطونا نقطتكم فـ 10 ثواني من هاد الرابط وتربحو حليوة فابور فالمجي الجاي:%0A` +
+                  `👉 ${LIEN_BOUCLIER_AVIS}`;
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    function markPaid(idx) {
+      orders[idx].advance = orders[idx].total;
+      orders[idx].status = 'done';
+      saveOrders();
+    }
+
+    function sendQuickReviewInvite() {
+      const name = document.getElementById('q-name').value.trim() || 'زبوننا العزيز';
+      const rawPhone = document.getElementById('q-phone').value.trim();
+      if (!rawPhone) {
+        alert('دخل رقم واتساب الزبون أولاً!');
+        return;
+      }
+      const phone = formatMarocPhone(rawPhone);
+      const msg = `السلام عليكم *${name}* 🌸،%0A%0A` +
+                  `شكراً على زيارتكم لـ *حلويات اللوبان (Pâtisserie Loubane)* اليوم! نتمنّاو تكون الحلوى عجباتكم 🎂.%0A%0A` +
+                  `عطونا رأيكم فـ 15 ثانية من هاد الرابط واستافدو من هدية الوفاء فالمجي الجاي:%0A` +
+                  `👉 ${LIEN_BOUCLIER_AVIS}`;
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    function openTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      btn.classList.add('active');
+    }
+
+    let isFr = false;
+    function toggleLang() {
+      isFr = !isFr;
+      const root = document.getElementById('html-root');
+      root.setAttribute('dir', isFr ? 'ltr' : 'rtl');
+      document.getElementById('lang-btn').textContent = isFr ? '🇲🇦 عربي' : '🇫🇷 FR';
+      document.getElementById('t-app-title').textContent = isFr ? 'Cockpit Gérant — Pâtisserie Loubane' : 'لوحة تسيير حلويات اللوبان';
+      document.getElementById('tb-1').textContent = isFr ? '📋 Carnet Commandes & Avances' : '📋 دفتر الكوموند والعربون';
+      document.getElementById('tb-2').textContent = isFr ? '🚀 Relance Avis 5★ WhatsApp' : '🚀 صيفط طلب تقييم 5★ فـ WhatsApp';
+      document.getElementById('tb-3').textContent = isFr ? '📊 Radar Google (3.6★ ➔ 4.2★)' : '📊 رادار Google Maps (3.6★ ➔ 4.2★)';
+    }
+
+    renderOrders();
+  </script>
+</body>
+</html>
